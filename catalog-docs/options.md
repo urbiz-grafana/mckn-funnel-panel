@@ -4,52 +4,33 @@ description: 'Reference for Funnel panel options.'
 sidebar_position: 3
 ---
 
-<!-- section-brief
-Fill this in: Reference the options Funnel exposes in the panel editor. Cover both the custom options the panel adds (via `setPanelOptions` in source) and the standard field options it enables (via `useFieldConfig`). Skip the sections below that don't apply to this panel - if there's no Standard field options block, no Tooltip section etc., remove those headings entirely rather than leaving an empty brief.
-
-Do not redocument the framework-level standard options themselves (Min, Max, Unit, etc.) - Grafana's own docs cover those. The Standard field options section lists which ones are enabled, nothing more.
--->
+Funnel adds its own options to the panel editor, and it enables most of the standard field options. The custom options are in the **Funnel** and **Time comparison** categories. Some options show only for a specific layout or when the data has a comparison period.
 
 ## Panel options
 
-<!-- section-brief
-Fill this in: Emit a markdown table with these columns - one row per option registered through `setPanelOptions` in `src/module.ts`. Match the Grafana built-in panel docs style: https://grafana.com/docs/grafana/latest/visualizations/panels-visualizations/visualizations/logs/#logs-options
+| Option                     | Type   | Default         | Description                                                                                                                                                                                                                       |
+| -------------------------- | ------ | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Layout**                 | Radio  | `Classic`       | Choose how the funnel is drawn. **Classic** is a centered funnel with labels on the left and percentages on the right. **Flow** is one section per step with details next to a continuous, smoothly narrowing funnel.             |
+| **Orientation**            | Radio  | `Vertical`      | Choose the direction of the steps. **Vertical** shows steps from top to bottom with the funnel on the right. **Horizontal** shows steps from left to right with the funnel below the details. Shows only for the flow layout.     |
+| **Sorting**                | Radio  | `Descending`    | Choose how to sort the steps by value. **Descending** sorts from highest to lowest, **Ascending** sorts from lowest to highest, and **None** applies no sorting.                                                                  |
+| **Show retention rate**    | Toggle | `Off`           | Show retention rate instead of drop-off rate in gap labels and tooltips. In the flow layout, the conversion of each step shows retention instead of drop-off.                                                                     |
+| **Show percentages**       | Toggle | `On`            | Show the percentage column next to the funnel bars. Shows only for the classic layout.                                                                                                                                            |
+| **Funnel to display**      | Radio  | `Newest period` | Choose which period to show when the data has a comparison period. **Newest period** shows the newest period and its change from the oldest period. **Oldest period** shows the oldest period and its change from the newest one. |
+| **A favorable outcome is** | Radio  | `Higher`        | Choose which direction of change is favorable. **Higher** shows increases as favorable. **Lower** shows decreases as favorable.                                                                                                   |
 
-| Option | Type | Default | Description |
-| ------ | ---- | ------- | ----------- |
-
-- _Option_: the `name` value from the `setPanelOptions` `.add*({...})` call, verbatim.
-- _Type_: a short label for the editor the option uses, derived from the builder method (`addBooleanSwitch` → Toggle, `addSelect` → Select, `addNumberInput` → Number, `addFieldNamePicker` → Field picker). For a custom editor, name what it is, such as Color picker, rather than writing Custom.
-- _Default_: the value a reader sees in the panel editor, rendered as inline code. Resolve enum members, constants and translation calls to that value - `ClockMode.time` becomes `Time`. Keep the source expression only when it can't be resolved. When there is no default but the code falls back to a value while the option is unset, give that fallback value. Leave the cell empty only when there is neither.
-- _Description_: the `description` value, verbatim. If the verbatim text causes a `docs:validate` warning, reword it as little as possible and keep its meaning. When source has none, write one short sentence describing what the option does, based on how the panel code uses it. Don't guess beyond what the code shows.
-
-If the panel does not call `setPanelOptions`, remove this section entirely.
--->
+The **Funnel to display** and **A favorable outcome is** options are in the **Time comparison** category. They show only for the flow layout, and only when the data has a comparison period from Grafana Time comparison. For details, refer to [Time comparison](./time-comparison.md).
 
 ## Standard field options
 
-<!-- section-brief
-Fill this in: A bulleted list of the standard field options this panel enables - the entries from `useFieldConfig({ standardOptions: [...] })` in `src/module.ts`. If the panel calls `useFieldConfig()` or `useFieldConfig({})` without a `standardOptions` key, document this as "all standard options are enabled" and list the standard set.
+Funnel enables these standard field options:
 
-If the panel does not call `useFieldConfig` at all, remove this section entirely.
--->
+- **Unit**
+- **Min**. Defaults to `0`. Keep this value, because the percentages and the width of the funnel depend on it.
+- **Max**
+- **Decimals**
+- **Display name**
+- **Color scheme**. Defaults to **Green-Yellow-Red (by value)**, and you can color by value or by series.
+- **Value mappings**
+- **Data links**. Only the flow layout shows data links. Refer to [Layouts](./layouts.md#data-links).
 
-## Custom field options
-
-<!-- section-brief
-Fill this in: A table with the same shape as Panel options (Option / Type / Default / Description) but for the per-field overrides registered via `useFieldConfig({ useCustomConfig: builder => ... })`. These appear under the Overrides picker in the panel editor.
-
-If the panel does not register custom field options, remove this section entirely.
--->
-
-## Tooltip options
-
-<!-- section-brief
-Fill this in: Describe the tooltip-related options Funnel exposes (hover behavior, what fields the tooltip shows, formatting). Most tooltip options will already appear in the Panel options table above when they're registered via `setPanelOptions` with `category: ['Tooltip']`; use this section for narrative context that doesn't fit in a table row. Remove this section if there is nothing extra to say beyond the table.
--->
-
-## Legend options
-
-<!-- section-brief
-Fill this in: Describe the legend-related options Funnel exposes (placement, values shown, calculations). Same pattern as Tooltip options - the table above already covers the per-option reference; this section is for narrative context. Remove the section if not applicable.
--->
+Funnel doesn't offer the **No value** and **Thresholds** options. For what these options do, refer to the Grafana documentation.

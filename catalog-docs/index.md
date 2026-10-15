@@ -4,25 +4,20 @@ description: 'Where to start and what to read next in the Funnel docs.'
 sidebar_position: 1
 ---
 
-<!-- section-brief
-Fill this in: Write a short orientation for someone who already has Funnel installed and landed here from the Documentation tab. One or two sentences on what this section covers and how it's organized. Do not restate what the plugin does, its feature list, or its requirements - that's the README's job on the Overview tab, and this reader has already seen it there. Do not list every page in this folder either - the sidebar already does that; use prose to say what to read first and why.
--->
+These docs explain how to feed the Funnel panel with data, choose a layout and configure it in the panel editor. They also cover comparing two time periods and fixing a panel that doesn't look right.
 
 ## Recommended path
 
-<!-- section-brief
-Fill this in: Give a short, ordered reading path for someone new to Funnel - two or three sentences, not a repeat of the sidebar. Point out the one or two pages most people need first and why, e.g. "Start with **Data formats** to shape your query results, then **Options** to configure the panel."
--->
+Start with **Data formats** to shape your query results, because the panel needs one numeric field for each step. Then read **Layouts** to choose between the classic and flow layouts, and **Options** to configure the panel.
 
 ## Common tasks
 
-<!-- section-brief
-Fill this in: List the jobs someone lands here to do, phrased as tasks rather than page titles, each linked to the page that answers it. For a typical panel plugin this might look like:
-
 - [Shape your query results for Funnel](./data-formats.md)
+- [Turn rows of step names and values into funnel steps](./data-formats.md#one-frame-with-rows-of-steps)
+- [Choose between the classic and flow layouts](./layouts.md)
+- [Open a dashboard or URL from a step](./layouts.md#data-links)
 - [Configure panel and field options](./options.md)
-- [See worked dashboard.json examples](./examples.md)
-- [Fix a panel that isn't rendering correctly](./troubleshooting.md)
-
-Adapt this to Funnel's actual entry points - add, remove or reword tasks so each one matches a real job a user comes here to do. This is a curated set of jobs, not a mechanical list of every file in this folder.
--->
+- [Compare the funnel with an earlier period](./time-comparison.md)
+- [Copy a working dashboard.json panel](./examples.md)
+- [Fix percentages or drop-off values that look wrong](./troubleshooting.md#percentages-or-drop-off-values-look-wrong)
+- [Fix a panel that shows an error or no data](./troubleshooting.md)

@@ -4,18 +4,63 @@ description: 'Learn what data formats the Funnel panel accepts.'
 sidebar_position: 2
 ---
 
-<!-- section-brief
-Fill this in: Describe the data shape Funnel needs from its data source queries. Be specific about field types and structure - this is the contract dashboard authors rely on when building queries for the panel.
--->
+The Funnel panel works with any data source that returns data frames with numeric fields. Each numeric field becomes one step in the funnel, so the way you shape your query results decides which steps you get.
 
 ## Supported data shape
 
-<!-- section-brief
-Fill this in: Describe the data frame shape Funnel expects: time series with N numeric fields, table with specific columns, single numeric value, geographic coordinates, log lines, etc. Name the required field types (time, number, string, boolean) and any minimum/maximum field counts. After each shape, add a `#### Example` table whose headers are the field names the panel reads, with 3-5 rows of realistic values, so a reader can build a matching query or test data.
--->
+Every data frame that reaches the panel needs at least one numeric field. The panel ignores fields of other types, such as strings and times. The panel shows one value for each numeric field, so use a transformation such as **Reduce** or **Rows to fields** when a query returns more than one value for a step.
 
-## Field mapping
+Use one of these shapes.
 
-<!-- section-brief
-Fill this in: Explain which incoming field plays which role in the visualization - for example "the first time-typed field is the x-axis, all numeric fields become series". If Funnel lets users explicitly pick field roles in the editor, document those controls here. Remove the section if mapping is fully automatic and not user-configurable.
--->
+### One frame for each step
+
+Use one query for each step. Each query returns a frame with a single numeric field. Name the query or frame after the step, or set **Display name** in the standard field options, so the step has a readable label. This is the most common way to query the data.
+
+#### Example
+
+| Frame name  | Value |
+| ----------- | ----- |
+| Sent        | 52300 |
+| Viewed      | 35679 |
+| Clicked     | 15690 |
+| Add to cart | 5596  |
+| Purchased   | 3290  |
+
+Each row above is a separate frame with one numeric field named `Value`.
+
+### One frame with one field for each step
+
+Use one frame with one numeric field for each step. The field names are the step names, and each field holds one value.
+
+#### Example
+
+| Sent  | Viewed | Clicked | Add to cart | Purchased |
+| ----- | ------ | ------- | ----------- | --------- |
+| 52300 | 35679  | 15690   | 5596        | 3290      |
+
+### One frame with rows of steps
+
+Some queries return one frame with two fields: one field with the step names and one field with the values. This is common when you query a pre-built view that holds the aggregated data for the funnel, for example when heavy queries run on a regular basis.
+
+Add the **Rows to fields** transformation to turn this into one frame with one field for each step, which is the shape in the previous section.
+
+#### Example
+
+| Label       | Value |
+| ----------- | ----- |
+| Sent        | 52300 |
+| Viewed      | 35679 |
+| Clicked     | 15690 |
+| Add to cart | 5596  |
+| Purchased   | 3290  |
+
+### Data that the panel can't use
+
+If no data frames reach the panel, it shows **No data**. If any frame has no numeric field, the panel shows an **Unsupported data** message that explains this requirement. For help with both, refer to [Troubleshooting](./troubleshooting.md).
+
+### Data for time comparison
+
+The flow layout can compare the funnel with an earlier period when you turn on Grafana Time comparison. For a comparison, each period needs exactly one non-negative numeric value for each step, and both periods need the same steps. Refer to [Time comparison](./time-comparison.md).
+
+> [!NOTE]
+> The panel sets **Min** to `0` by default, which the percentages depend on. If you change **Min** to `auto`, the percentages and drop-off values are wrong. Refer to [Percentages or drop-off values look wrong](./troubleshooting.md#percentages-or-drop-off-values-look-wrong).
